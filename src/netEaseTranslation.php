@@ -56,9 +56,9 @@ class AumNetEaseTranslation
 
     private function getTimeFromTag($tag)
     {
-        $min = substr($tag, 1, 2);
-        $sec = substr($tag, 4, 2);
-        $mil = substr($tag, 7, strlen($tag) - 8);
+        $min = (int)substr($tag, 1, 2);
+        $sec = (int)substr($tag, 4, 2);
+        $mil = (int)substr($tag, 7, strlen($tag) - 8);
         return $mil + $sec * 1000 + $min * 60 * 1000;
     }
 
@@ -86,7 +86,7 @@ class AumNetEaseTranslation
                 $key = '';
                 $value = $line;
             }
-            array_push($result, array('tag' => $key, 'lrc' => $value));
+            array_push($result, array('tag' => $key, 'lrc' => trim($value)));
         }
         return $result;
     }
