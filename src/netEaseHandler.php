@@ -1,5 +1,5 @@
 <?php
-require('netEaseCommon.php');
+require('netEaseTranslation.php');
 
 class AumNetEaseHandler {
     public static $siteSearch = 'https://music.163.com/api/search/get/web';
@@ -31,10 +31,10 @@ class AumNetEaseHandler {
         }
     }
 
-    public static function search($word) {
+    public static function search($title, $artist) {
         $results = array();
         $params = array(
-            's' => $word,
+            's' => $title,
             'offset' => '0',
             'limit' => '20',
             'type' => '1' // 搜索单曲(1)，歌手(100)，专辑(10)，歌单(1000)，用户(1002)
@@ -72,7 +72,8 @@ class AumNetEaseHandler {
         // Chinese translation
         $transLyric = $json['tlyric']['lyric'];
         if (strlen($transLyric) > 0) {
-            $lyric = AumNetEaseCommon::getChineseTranslationLrc($lyric, $transLyric);
+            $tl = new AumNetEaseTranslation($lyric, $transLyric);
+            $lyric = $tl->getChineseTranslationLrc();
         }
         return $lyric;
     }

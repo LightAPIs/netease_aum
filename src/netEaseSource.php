@@ -17,7 +17,7 @@ class AumNetEaseSource {
         $this->mTitle = $title;
         $this->lowTitle = strtolower($title);
 
-        $list = AumNetEaseHandler::search($title);
+        $list = AumNetEaseHandler::search($title, $artist);
         if (count($list) === 0) {
             return 0;
         }

@@ -1,14 +1,42 @@
 <?php
 
-class AumNetEaseCommon
+class AumNetEaseTranslation
 {
-    public static function isValidLrcTime($str)
+    private $orgLrc;
+    private $transLrc;
+    public function __construct($orgLrc, $transLrc) {
+        $this->orgLrc = $orgLrc;
+        $this->transLrc = $transLrc;
+    }
+
+    private function getLrcTime($str) {
+        $key = strstr($str, ']', true);
+        if ($key === false) {
+            return '';
+        }
+
+        return $key . ']';
+    }
+
+    private function getLrcText($str, $key) {
+        if ($key === '') {
+            return $str;
+        }
+
+        return str_replace($key, '', $str);
+    }
+
+    private function isValidLrcTime($str)
     {
-        if (trim($str) === '' || strlen($str) !== 10 || $str[0] !== '[' || $str[9] !== ']') {
+        if (trim($str) === '' || $str[0] !== '[') {
             return false;
         }
 
-        for ($count = 1; $count < 9; $count++) {
+        $keyLen = strlen($str);
+        if ($keyLen < 9 || $keyLen > 11) {
+            return false;
+        }
+        for ($count = 1; $count < $keyLen - 1; $count++) {
             $ch = $str[$count];
             if ($ch !== ':' && $ch !== '.' && !is_numeric($ch)) {
                 return false;
@@ -18,7 +46,7 @@ class AumNetEaseCommon
         return true;
     }
 
-    public static function isValidLrcText($str)
+    private function isValidLrcText($str)
     {
         if (trim($str) === '' || trim($str) === '//') {
             return false;
@@ -26,22 +54,22 @@ class AumNetEaseCommon
         return true;
     }
 
-    public static function getTimeFromTag($tag)
+    private function getTimeFromTag($tag)
     {
         $min = substr($tag, 1, 2);
         $sec = substr($tag, 4, 2);
-        $mil = substr($tag, 7, 2);
-        return $mil + $sec * 100 + $min * 60 * 100;
+        $mil = substr($tag, 7, strlen($tag) - 8);
+        return $mil + $sec * 1000 + $min * 60 * 1000;
     }
 
-    public static function processLrcLine($lrc)
+    private function processLrcLine($lrc)
     {
         $result = array();
         foreach (explode("\n", $lrc) as $line) {
             $line = trim($line);
-            $key = substr($line, 0, 10);
-            $value = substr($line, 10, strlen($line) - 10);
-            if (!AumNetEaseCommon::isValidLrcTime($key) || !AumNetEaseCommon::isValidLrcText($value)) {
+            $key = $this->getLrcTime($line);
+            $value = $this->getLrcText($line, $key);
+            if (!$this->isValidLrcTime($key) || !$this->isValidLrcText($value)) {
                 $key = '';
                 $value = $line;
             }
@@ -50,11 +78,11 @@ class AumNetEaseCommon
         return $result;
     }
 
-    public static function getChineseTranslationLrc($orgLrc, $transLrc)
+    public function getChineseTranslationLrc()
     {
         $resultLrc = '';
-        $orgLines = AumNetEaseCommon::processLrcLine($orgLrc);
-        $transLines = AumNetEaseCommon::processLrcLine($transLrc);
+        $orgLines = $this->processLrcLine($this->orgLrc);
+        $transLines = $this->processLrcLine($this->transLrc);
 
         $transCursor = 0;
         foreach ($orgLines as $line) {
@@ -64,10 +92,10 @@ class AumNetEaseCommon
 
             $trans = '';
             if ($key !== '') {
-                $time = AumNetEaseCommon::getTimeFromTag($key);
+                $time = $this->getTimeFromTag($key);
                 for ($i = $transCursor; $i < count($transLines); $i++) {
                     $tKey = $transLines[$i]['tag'];
-                    if (AumNetEaseCommon::getTimeFromTag($tKey) > $time) {
+                    if ($this->getTimeFromTag($tKey) > $time) {
                         $transCursor = $i;
                         break;
                     }

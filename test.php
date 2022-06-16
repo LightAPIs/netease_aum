@@ -5,7 +5,8 @@ require('src/netEaseSource.php');
 $downloader = (new ReflectionClass('AumNetEaseSource'))->newInstance();
 $testArray = array(
     array('title' => '无法停止爱你', 'artist' => '贺仙人'),
-    array('title' => 'Boogie Up', 'artist' => '宇宙少女')
+    array('title' => 'Boogie Up', 'artist' => '宇宙少女'),
+    array('title' => '나 혼자 여름 [Piano Ver.]', 'artist' => 'Brave Girls')
 );
 
 foreach ($testArray as $key => $item) {
