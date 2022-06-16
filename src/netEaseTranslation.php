@@ -62,6 +62,19 @@ class AumNetEaseTranslation
         return $mil + $sec * 1000 + $min * 60 * 1000;
     }
 
+    // 若 $lTime > $rTime, 返回 1; $lTime < $rTime, 返回 -1; $lTime == $rTime, 返回 0
+    private function compareTime($lTime, $rTime) {
+        $subVal = $lTime - $rTime;
+        // 允许有 1ms 的误差
+        if ($subVal > 1) {
+            return 1;
+        } elseif ($subVal < -1) {
+            return  -1;
+        } else {
+            return 0;
+        }
+    }
+
     private function processLrcLine($lrc)
     {
         $result = array();
@@ -95,13 +108,18 @@ class AumNetEaseTranslation
                 $time = $this->getTimeFromTag($key);
                 for ($i = $transCursor; $i < count($transLines); $i++) {
                     $tKey = $transLines[$i]['tag'];
-                    if ($this->getTimeFromTag($tKey) > $time) {
+                    if ($tKey === '') {
+                        continue;
+                    }
+
+                    $tTime = $this->getTimeFromTag($tKey);
+                    if ($this->compareTime($tTime, $time) > 0) {
                         $transCursor = $i;
                         break;
                     }
 
                     $tValue = $transLines[$i]['lrc'];
-                    if ($key === $tKey) {
+                    if ($this->compareTime($tTime, $time) == 0) {
                         $transCursor = $i + 1;
                         $trans = $tValue;
                         break;
