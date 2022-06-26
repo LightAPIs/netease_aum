@@ -8,7 +8,8 @@ $testArray = array(
     array('title' => 'Boogie Up', 'artist' => '宇宙少女'),
     array('title' => '나 혼자 여름 [Piano Ver.]', 'artist' => 'Brave Girls'),
     array('title' => 'tell your world', 'artist' => '初音ミク'),
-    array('title' => 'tell your world', 'artist' => 'livetune / 初音ミク')
+    array('title' => 'tell your world', 'artist' => 'livetune / 初音ミク'),
+    array('title' => 'Mood (Remix)', 'artist' => '24KGoldn&Justin Bieber&J Balvin&iann dior')
 );
 
 foreach ($testArray as $key => $item) {
