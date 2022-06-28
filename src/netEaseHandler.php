@@ -34,7 +34,7 @@ class AumNetEaseHandler {
     public static function search($title, $artist) {
         $results = array();
         $params = array(
-            's' => $title,
+            's' => $title . " " . $artist,
             'offset' => '0',
             'limit' => '20',
             'type' => '1' // 搜索单曲(1)，歌手(100)，专辑(10)，歌单(1000)，用户(1002)
