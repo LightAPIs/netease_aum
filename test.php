@@ -9,7 +9,8 @@ $testArray = array(
     array('title' => '나 혼자 여름 [Piano Ver.]', 'artist' => 'Brave Girls'),
     array('title' => 'tell your world', 'artist' => '初音ミク'),
     array('title' => 'tell your world', 'artist' => 'livetune / 初音ミク'),
-    array('title' => 'Mood (Remix)', 'artist' => '24KGoldn&Justin Bieber&J Balvin&iann dior')
+    array('title' => 'Mood (Remix)', 'artist' => '24KGoldn&Justin Bieber&J Balvin&iann dior'),
+    array('title' => 'WOW', 'artist' => 'Dom.T')
 );
 
 foreach ($testArray as $key => $item) {
@@ -19,6 +20,7 @@ foreach ($testArray as $key => $item) {
         echo "等待 5 秒...\n";
         sleep(5);
     }
+    echo "{title = " . $item['title'] . "; artist = " . $item['artist'] . " }.\n";
     $testObj = new AudioStationResult();
     $count = $downloader->getLyricsList($item['artist'], $item['title'], $testObj);
     if ($count > 0) {
