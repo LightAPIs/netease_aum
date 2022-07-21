@@ -10,8 +10,7 @@ $testArray = array(
     array('title' => 'tell your world', 'artist' => '初音ミク'),
     array('title' => 'tell your world', 'artist' => 'livetune / 初音ミク'),
     array('title' => 'Mood (Remix)', 'artist' => '24KGoldn&Justin Bieber&J Balvin&iann dior'),
-    array('title' => 'WOW', 'artist' => 'Dom.T'),
-    array('title' => 'めいど・うぃず・どらごんず❤', 'artist' => '桑原由気 / 長縄まりあ / 高田憂希 / 高橋未奈美 / 嶺内ともみ')
+    array('title' => 'WOW', 'artist' => 'Dom.T')
 );
 
 foreach ($testArray as $key => $item) {
