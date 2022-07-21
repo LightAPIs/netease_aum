@@ -2,7 +2,7 @@
   "name": "netease_cloud_music",
   "displayname": "网易云音乐",
   "description": "music.163.com",
-  "version": "1.5",
+  "version": "1.6",
   "module": "netEaseSource.php",
   "type": "lyric",
   "class": "AumNetEaseSource"
