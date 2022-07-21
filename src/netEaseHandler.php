@@ -12,7 +12,7 @@ class AumNetEaseHandler {
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curl, CURLOPT_USERAGENT, AumNetEaseHandler::$userAgent);
+        curl_setopt($curl, CURLOPT_USERAGENT, self::$userAgent);
         curl_setopt($curl, CURLOPT_POST, $isPost);
         if ($isPost) {
             curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($postParams));
@@ -40,7 +40,7 @@ class AumNetEaseHandler {
             'type' => '1' // 搜索单曲(1)，歌手(100)，专辑(10)，歌单(1000)，用户(1002)
         );
 
-        $jsonContent = AumNetEaseHandler::getContent(AumNetEaseHandler::$siteSearch, '{"result":{"songs":[]}}', true, $params);
+        $jsonContent = self::getContent(self::$siteSearch, '{"result":{"songs":[]}}', true, $params);
         $json = json_decode($jsonContent, true);
 
         $songArray = $json['result']['songs'];
@@ -65,8 +65,8 @@ class AumNetEaseHandler {
     }
 
     public static function downloadLyric($songId) {
-        $url = AumNetEaseHandler::$siteDownload . $songId;
-        $jsonContent = AumNetEaseHandler::getContent($url, '{"lrc":{"lyric":""},"tlyric":{"lyric":""}}');
+        $url = self::$siteDownload . $songId;
+        $jsonContent = self::getContent($url, '{"lrc":{"lyric":""},"tlyric":{"lyric":""}}');
         $json = json_decode($jsonContent, true);
         $lyric = $json['lrc']['lyric'];
         // Chinese translation
