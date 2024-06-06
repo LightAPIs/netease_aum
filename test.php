@@ -5,12 +5,12 @@ require('src/netEaseSource.php');
 $downloader = (new ReflectionClass('AumNetEaseSource'))->newInstance();
 $testArray = array(
     array('title' => '无法停止爱你', 'artist' => '贺仙人'),
-    array('title' => 'Boogie Up', 'artist' => '宇宙少女'),
     array('title' => '나 혼자 여름 [Piano Ver.]', 'artist' => 'Brave Girls'),
     array('title' => 'tell your world', 'artist' => '初音ミク'),
     array('title' => 'tell your world', 'artist' => 'livetune / 初音ミク'),
     array('title' => 'Mood (Remix)', 'artist' => '24KGoldn&Justin Bieber&J Balvin&iann dior'),
-    array('title' => 'WOW', 'artist' => 'Dom.T')
+    array('title' => 'WOW', 'artist' => 'Dom.T'),
+    array('title' => 'No.1', 'artist' => '西野カナ')
 );
 
 foreach ($testArray as $key => $item) {
